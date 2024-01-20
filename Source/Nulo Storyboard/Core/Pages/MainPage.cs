@@ -1,15 +1,19 @@
 ﻿using Nulo.Modules.WorkspaceManager.Docking;
 
-namespace Nulo.Pages {
+namespace Nulo.Core.Pages {
 
-    public partial class MainPage : Form {
+    internal partial class MainPage : Form {
 
-        public MainPage() {
+        #region MainPage
+
+        public MainPage(ToolStripItem[] menuItems) {
             InitializeComponent();
+            MenuStrip.Items.AddRange(menuItems);
+
             DockPanel.Controls.Add(Program.WorkspaceManager.DockPanel);
             Program.WorkspaceManager.Style = WorkspaceManager_Style;
             Program.WorkspaceManager.SetToolStripWorkspaces(ToolStripWorkspaces);
-            Program.WorkspaceManager.SetMenuStripWorkspaces(MenuStripWindow, MenuStripWindowWorkspaces);
+            Program.WorkspaceManager.SetMenuStripWorkspaces(Program.ExtensionManager.GetMenuItem("window"), Program.ExtensionManager.GetMenuItem("window/workspaces"));
             Program.WorkspaceManager.Init();
 
             Program.MultiLanguageManager.SwitchLanguage += MultiLanguageManager_SwitchLanguage;
@@ -20,18 +24,26 @@ namespace Nulo.Pages {
             Program.WorkspaceManager.Dispose();
         }
 
+        #endregion MainPage
+
+        #region WorkspaceManager
+
         private void WorkspaceManager_Style(ToolStripExtender style) {
             BackColor = Program.WorkspaceManager.Theme.ColorPalette.CommandBarMenuDefault.Background;
 
             style.SetStyle(MenuStrip);
             style.SetStyle(ToolStrip);
-            style.SetStyle(StatusStrip);
         }
 
+        #endregion WorkspaceManager
+
+        #region MultiLanguageManager
+
         private void MultiLanguageManager_SwitchLanguage() {
-            MenuStripWindow.Text = Program.MultiLanguageManager.GetText("MenuWindow");
-            MenuStripWindowWorkspaces.Text = Program.MultiLanguageManager.GetText("MenuWindowWorkspaces");
+            Program.ExtensionManager.TextsUpdate();
             Program.WorkspaceManager.TextsUpdate();
         }
+
+        #endregion MultiLanguageManager
     }
 }

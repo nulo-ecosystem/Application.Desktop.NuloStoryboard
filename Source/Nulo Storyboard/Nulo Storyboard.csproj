@@ -78,4 +78,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="System.Diagnostics" />
+    <Using Include="System.Globalization" />
+    <Using Include="System.Reflection" />
+  </ItemGroup>
+
 </Project>

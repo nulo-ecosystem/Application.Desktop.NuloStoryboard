@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 
-namespace Nulo.Utilities {
+namespace Nulo.Core.Utilities {
 
     internal static class DataAssembly {
         private static Assembly assembly;
